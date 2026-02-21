@@ -1,0 +1,55 @@
+Day 14: 2026-2-17
+Level 1：循环里的状态变化
+def numstpye(nums):
+    d = {"pos": 0, "neg": 0, "zero": 0}
+    for i in nums:
+        if i == 0:
+            d["zero"] += 1
+        elif i > 0:
+            d["pos"] += 1
+        else:
+            d["neg"] += 1
+    return d
+这里的字典是“静态容器”还是“动态状态机”？
+动态状态机
+状态是在什么时候变化的？
+遍历列表的时候
+如果列表为空，返回什么？合理吗？
+返回初始状态的字典，都是0。合理，没有就都是0。
+
+level 2：判断一个列表中是否存在：连续两个相同的数字
+def samenum(n):
+    if len(n) < 2:
+        return False
+
+    t = n[0]
+    for i in range(1,len(n)):
+        if t == n[i]:
+            return True
+        t = n[i]
+
+    return False
+
+这个“上一个数”是不是一种状态？
+是
+为什么不能直接比较所有两两组合？
+复杂度较高，程序较复杂
+//两两比较是 O(n²)，而状态变量方法是 O(n)
+如果列表长度小于 2，返回什么？
+false
+
+level 3:
+def transaction_list(transactions):
+    account = 0
+    for i in transactions:
+        account += i
+        if account < 0:
+            return "Overdraft"
+
+    return account
+余额是不是一种“动态状态”？
+是
+为什么要在循环内部判断？
+一旦判断出可以中断循环，就不需要继续遍历了
+这个结构像不像现实系统？
+像

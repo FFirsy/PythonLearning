@@ -1,0 +1,51 @@
+2026-1-23 Day 9
+
+Level 1:
+task 1:
+while num > 0 这种场景，能不能用 for？为什么？
+for 循环适合“次数事先可确定”的循环
+while 循环适合“次数由条件动态决定”的循环
+task 2:
+遍历 nums 时，用 while 合适吗？为什么？
+遍历数组用 while 当然可以
+但 for 更简洁、更不容易写错
+
+总结level1：
+for 和 while 都能做很多事，
+但 for 更适合“遍历”，
+while 更适合“条件驱动的过程”。
+
+level 2:
+LeetCode #1732 — Find the Highest Altitude
+code：
+class Solution(object):
+    def largestAltitude(self, gain):
+        current  = 0
+        max_value = 0
+        for v in gain:
+            current += v
+            max_value = max(max_value, current)
+        return max_value
+
+current 为什么是状态变量？
+//current 表示“当前累计高度”，
+它的值依赖于上一次循环的结果，
+所以它是状态变量。
+如果把 max_value = 0 写进 for 循环，会发生什么？
+max_value会成为最后一个值，然后每一次循环都让max_value归零，会比current小
+//每次循环都会把 max_value 重置为 0，
+导致无法保存“历史最大值”，
+最终结果只和最后一次循环有关。
+
+level 3:
+LeetCode #1480 — Running Sum
+讲题：
+这道题是在把一个数组累加，并且返回累加后的数组结果。
+我用了一个变量：累加的和，当每次for循环到下一个值的时候加。
+输入的是空数组，代码不会出问题，只会返回空数组.
+//如果输入是空数组，for 循环不会执行，
+状态变量保持初始值，
+返回的也是空数组，这是合理的边界行为。
+
+总结：今天学习了for和while循环的区别，实际上之前已经学过了
+这是对知识的复习，较简单，没有问题。

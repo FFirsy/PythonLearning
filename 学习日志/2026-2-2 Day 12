@@ -1,0 +1,72 @@
+2026-2-2 Day 12
+level 1:
+为什么 current、step 这种变量叫 状态变量？
+因为这些变量的值会影响到程序的执行流程。
+什么是状态变量：
+//状态变量 = 用来描述“当前进度 / 当前情况”的变量，
+//它会随着循环或条件变化而持续更新，并决定下一步怎么走。
+什么情况下一个变量不够用？
+//当我要同时描述 多个维度的状态 时，一个变量不够用
+为什么“统计问题”很适合用 字典 / set / list？
+因为统计问题需要对多个数据进行计数、汇总、排序等操作。
+//因为统计问题的本质是“一个 key → 对应一个状态值”字典天然就是这种结构。
+
+LeetCode #383 — Ransom Note（赎金信）
+class Solution(object):
+    def canConstruct(self, ransomNote, magazine):
+        count = {}
+
+        # 1. 统计 magazine 中的字母状态
+        for char in magazine:
+            if char in count:
+                count[char] += 1
+            else:
+                count[char] = 1
+
+        # 2. 消耗 ransomNote 中的字母
+        for char in ransomNote:
+            if char in count and count[char] > 0:
+                count[char] -= 1
+
+            #    如果某个字母不够，立刻 return False
+            else:
+                return False
+        return True
+
+Level 2:
+LeetCode #1748 — Sum of Unique Elements（独特元素的和）
+class Solution(object):
+    def sumOfUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sum = 0
+        count = {}
+        for num in nums:
+            if num in count:
+                count[num] += 1
+            else:
+                count[num] = 1
+
+        for num in count:
+            if count[num] == 1:
+                sum += num
+        return sum
+
+为什么要分两步？
+工程思维：分而治之
+//第一步负责 建立完整状态，第二步负责 基于状态做决策
+字典里的 value 表示什么“状态”？
+一个数组中的元素出现的次数
+如果数组是空的，返回值应该是什么？合理吗？
+返回值应该是0，合理且正确
+
+level 3:
+为什么工程里 宁可多写几行，也不喜欢“神之一行”？
+工程中追求易读易懂，易修改，易扩展，数据过多的情况要考虑性能。
+//因为工程代码是 给人看的，不是给编译器看的
+return 在工程中最重要的一个作用是什么？
+提前结束函数的执行，返回值给调用者。
+如果一个函数：不return，只修改参数，它更像“计算”还是“动作”？
+动作

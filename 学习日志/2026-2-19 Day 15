@@ -1,0 +1,73 @@
+Day 15: 2026-2-19
+Level 1：函数职责拆分
+def count_types(nums):
+    d = {"pos": 0, "neg": 0, "zero": 0}
+    for i in nums:
+        if i == 0:
+            d["zero"] += 1
+        elif i > 0:
+            d["pos"] += 1
+        else:
+            d["neg"] += 1
+    return d
+
+def has_consecutive(nums):
+    if len(nums) < 2:
+        return False
+
+    t = nums[0]
+    for i in range(1,len(nums)):
+        if t == nums[i]:
+            return True
+        t = nums[i]
+
+    return False
+
+def main(nums):
+    counts_result = count_types(nums)
+    has_consecutive_result = has_consecutive(nums)
+
+    return {
+        "counts": counts_result,
+        "has_consecutive": has_consecutive_result
+    }
+为什么不把所有逻辑写在一个函数？
+这才是工程需要的，而不是简单的刷题。
+主函数和功能函数的角色区别是什么？
+主函数负责调用功能函数，并返回结果。功能函数负责完成具体的功能，并返回结果给主函数。
+
+Level 2：流程控制
+def apply_transaction(balance, amount):
+    balance += amount
+    return balance
+
+def process_transactions(transactions):
+    balance = 0
+    for transaction in transactions:
+        balance = apply_transaction(balance, transaction)
+        if balance < 0:
+            return "Overdraft"
+    return balance
+
+def main(transactions):
+    balance = process_transactions(transactions)
+    if balance == "Overdraft":
+        print("Overdraft detected")
+    else:
+        print("Final balance:", balance)
+
+什么时候应该拆函数？
+需要实现每个单一功能的时候
+函数拆分和“可测试性”有什么关系？
+当系统出问题的时候，我们需要测试每一个函数，以确定哪个函数出了问题，如果函数不拆分，每一次修改都会影响到程序的其他部分，这会导致程序的可测试性降低。
+如果以后要加“手续费”，你会改哪个函数？
+apply_transaction()
+
+Level 3：结构理解题
+为什么“一个函数只做一件事”是工程黄金原则？
+一个函数只做一件事，意味着函数的职责单一，易于理解和维护。
+//易读、易改、易测、易复用。
+什么是“高内聚、低耦合”？（不用太专业，说你理解的版本）
+每个函数单独实现独立的功能，并做好。（高内聚）并且不与其他函数相互影响（低耦合）
+如果代码越来越大，不拆分会发生什么？
+越难越修改，牵一发而动全身，难以维护。

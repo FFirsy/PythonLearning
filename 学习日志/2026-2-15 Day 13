@@ -1,0 +1,50 @@
+Day 13: 2026-2-15
+level 1:
+def scorelevel(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "D"
+为什么必须从大到小判断？
+条件有“覆盖关系”时，必须先判断更严格的条件。
+如果顺序写错会发生什么？
+如果顺序错了，最终返回的结果可能与预期不符。例如95分本应返回“A”，但由于判断顺序写错，最终返回了“B”。
+这算不算一种“状态判断”？
+是状态判断的一种形式
+
+level 2:
+def login(password_attempt,real_password):
+    if not password_attempt:
+        return "Empty input"
+    elif password_attempt == real_password:
+        return "Login successful"
+    else:
+        return "Wrong password"
+为什么要先判断“空”？
+是为了确保函数能够处理无效输入的情况。如果用户没有输入任何内容（即输入为空），程序应该能够识别这种情况并给出相应的提示，而不是继续尝试比较空字符串与实际密码。这样可以提高程序的健壮性和用户体验。
+这三个判断之间有没有优先级？
+有优先级，按这个顺序判断：空，正确，错误。
+这是不是一种“有限状态转移”？
+它是一个非常简单的有限状态机
+
+level 3:
+def char(char):
+    if char.isdigit():
+        return 'digit'
+    elif char.isalpha():
+        return 'alpha'
+    elif char in [' ', '\t', '\n']:
+        return 'space'
+    else:
+        return 'other'
+为什么这种逻辑结构很像“分类器”？
+因为它根据输入字符的不同特征将其归类到不同的类别中,因为它将输入映射到互斥类别，且只会命中一个分支。
+如果我要加一个“标点符号”类别，该怎么扩展？
+elif char in string.punctuation:
+        return 'punctuation'
+这种结构和我们之前的“统计字典”有什么本质区别？
+分类结构是“即时决策型”,字典统计是“累积状态型”
